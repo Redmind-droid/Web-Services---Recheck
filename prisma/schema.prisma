@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Diploma {
+  DiplomaID     Int           @id @default(autoincrement())
+  naam          String
+  afstudeerJaar Int
+  diploma_job   diploma_job[]
+}
+
+model Gebruiker {
+  gebruikerID   Int             @id @default(autoincrement())
+  naam          String
+  straat        String
+  nummer        Int
+  postcode      Int
+  stad          String
+  gebruiker_job gebruiker_job[]
+}
+
+model Job {
+  jobID            Int                @id @default(autoincrement())
+  naam             String
+  bedrijf          String
+  diploma_job      diploma_job[]
+  gebruiker_job    gebruiker_job[]
+  vaardigheid_job vaardigheid_job[]
+}
+
+model Vaardigheid {
+  vaardigheidID   Int                @id @default(autoincrement())
+  naam             String
+  jaarErvaring     Int
+  vaardigheid_job vaardigheid_job[]
+}
+
+model diploma_job {
+  diplomaID Int
+  jobID     Int
+  Diploma   Diploma @relation(fields: [diplomaID], references: [DiplomaID], onDelete: NoAction, onUpdate: NoAction)
+  Job       Job     @relation(fields: [jobID], references: [jobID], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([diplomaID, jobID], map: "diploma_job_PK")
+}
+
+model gebruiker_job {
+  gebruikerID Int
+  jobID       Int
+  Gebruiker   Gebruiker @relation(fields: [gebruikerID], references: [gebruikerID], onDelete: NoAction, onUpdate: NoAction)
+  Job         Job       @relation(fields: [jobID], references: [jobID], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([gebruikerID, jobID])
+}
+
+model vaardigheid_job {
+  vaardigheidID Int
+  jobID          Int
+  Job            Job          @relation(fields: [jobID], references: [jobID], onDelete: NoAction, onUpdate: NoAction)
+  Vaardigheid   Vaardigheid @relation(fields: [vaardigheidID], references: [vaardigheidID], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([vaardigheidID, jobID])
+}

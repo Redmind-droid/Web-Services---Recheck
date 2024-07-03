@@ -1,0 +1,42 @@
+{
+  "name": "Webservices-API",
+  "version": "1.0.0",
+  "description": "webservices API",
+  "main": "src/index.js",
+  "author": "Ewald Verhaeghe <ewald.verhaeghe@student.hogent.be>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "env-cmd nodemon"
+  },
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "@koa/router": "^12.0.1",
+    "@prisma/client": "^5.16.1",
+    "config": "^3.3.12",
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "prisma": "^5.16.1",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "nodemon": "^3.1.4"
+  },
+  "nodemonConfig": {
+    "signal": "SIGTERM",
+    "ignore": [
+      "node_modules/*",
+      ".vscode/*"
+    ],
+    "delay": "80",
+    "watch": [
+      "config",
+      "src",
+      "index.js"
+    ],
+    "ext": "js,json",
+    "legacyWatch": true,
+    "exec": "node --inspect=0.0.0.0:9001 --trace-warnings src/index.js"
+  }
+}

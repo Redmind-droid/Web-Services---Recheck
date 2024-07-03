@@ -1,0 +1,33 @@
+[Gebruiker]
+*id
+naam
+voorNaam
+straat
+nummer
+postcode
+stad
+
+
+[Vaardigheden]
+*id
+naam
+jaarErvaring
+
+[Diploma]
+*id
+naam
+afstudeerJaar
+
+[Job]
+*id
+naam
+bedrijf
++gebruikerId
++vaardighedenId
++diplomaId
+
+Gebruiker *--* Vaardigheden
+Gebruiker *--* Diploma
+Job *--* Vaardigheden
+Job *--* Diploma
+Gebruiker *--* Job
